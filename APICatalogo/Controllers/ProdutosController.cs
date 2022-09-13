@@ -48,6 +48,7 @@ namespace APICatalogo.Controllers
             };
 
             Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(metadata));
+
             if (produtos is null)
                 return NotFound("Produtos não encontrados");
 

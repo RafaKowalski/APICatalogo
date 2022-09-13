@@ -1,4 +1,6 @@
-﻿namespace APICatalogo.Pagination
+﻿using APICatalogo.Models;
+
+namespace APICatalogo.Pagination
 {
     public class PagedList<T> : List<T>
     {
