@@ -5,8 +5,11 @@ using APICatalogo.Filter;
 using APICatalogo.Repository;
 using APICatalogo.Services;
 using AutoMapper;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -25,6 +28,22 @@ options.UseMySql(mySqlConnection, ServerVersion.AutoDetect(mySqlConnection)));
 builder.Services.AddIdentity<IdentityUser, IdentityRole>()
     .AddEntityFrameworkStores<AppDbContext>()
     .AddDefaultTokenProviders();
+
+builder.Services.AddAuthentication(
+    JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuer = true,
+        ValidateAudience = true,
+        ValidateLifetime = true,
+        ValidAudience = builder.Configuration["TokenConfiguration:Audience"],
+        ValidIssuer = builder.Configuration["TokenConfiguration:Issuer"],
+        ValidateIssuerSigningKey = true,
+        IssuerSigningKey = new SymmetricSecurityKey(
+            Encoding.UTF8.GetBytes(builder.Configuration["Jwt:key"]))
+
+    });
+    
 
 builder.Services.AddTransient<IMeuServico, MeuServico>();
 builder.Services.AddScoped<ApiLoggingFilter>();
