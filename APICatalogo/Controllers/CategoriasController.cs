@@ -5,6 +5,7 @@ using APICatalogo.Pagination;
 using APICatalogo.Repository;
 using APICatalogo.Services;
 using AutoMapper;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
@@ -13,6 +14,7 @@ namespace APICatalogo.Controllers
 {
     [Route("[controller]")]
     [ApiController]
+    [EnableCors]
     public class CategoriasController : ControllerBase
     {
         private readonly IUnitOfWork _uof;

@@ -4,6 +4,7 @@ using APICatalogo.Models;
 using APICatalogo.Pagination;
 using APICatalogo.Repository;
 using AutoMapper;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 
@@ -11,6 +12,7 @@ namespace APICatalogo.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [EnableCors("PermitirApiRequest")]
     public class ProdutosController : ControllerBase
     {
         private readonly IUnitOfWork _uol;
