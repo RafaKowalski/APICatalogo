@@ -44,6 +44,13 @@ builder.Services.AddAuthentication(
 
     });
 
+builder.Services.AddApiVersioning(options =>
+{
+    options.AssumeDefaultVersionWhenUnspecified = true;
+    options.DefaultApiVersion = new Microsoft.AspNetCore.Mvc.ApiVersion(1, 0);
+    options.ReportApiVersions = true;
+});
+
 builder.Services.AddCors();
 builder.Services.AddTransient<IMeuServico, MeuServico>();
 builder.Services.AddScoped<ApiLoggingFilter>();
