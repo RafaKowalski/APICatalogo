@@ -39,12 +39,12 @@ namespace APICatalogo.Controllers
                 var categoria = _uof.CategoriaRepository.GetCategoriasProdutos().ToList();
                 var categoriaDTO = _mapper.Map<List<CategoriaDTO>>(categoria);
 
+                //throw new Exception();
                 return categoriaDTO;
             }
             catch (Exception)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError,
-                    "Ocorreu um problema ao tratar a sua solicitação.");
+                return BadRequest();
             }
         }
 
