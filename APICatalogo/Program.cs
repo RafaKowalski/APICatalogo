@@ -51,7 +51,15 @@ builder.Services.AddApiVersioning(options =>
     options.ReportApiVersions = true;
 });
 
-builder.Services.AddCors();
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("EnableCORS", builder =>
+    {
+        builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod().Build();
+    });
+});
+
+
 builder.Services.AddTransient<IMeuServico, MeuServico>();
 builder.Services.AddScoped<ApiLoggingFilter>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
@@ -86,7 +94,7 @@ app.UseAuthentication();
 //Middleware para habilitar a autorização
 app.UseAuthorization();
 
-app.UseCors(opt => opt.AllowAnyOrigin());
+app.UseCors("EnableCORS");
 
 app.MapControllers();
 
